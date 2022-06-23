@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.15;
+
+contract VendinMachine {
+    address public owner;
+    mapping ( address=> uint) public donutBalances;
+
+    constructor () {
+        owner= msg.sender;
+        donutBalances[address (this)] = 100;
+    }
+
+    function getVendingMachineBalance () public view returns (uint) {
+        return donutBalances[address(this)];
+    }
+
+    function restock(uint amount) public {
+        require(msg.sender== owner, "Only owner can restock this machine ");
+        donutBalances [address(this)] += amount;
+    }
+
+    function purchase(uint amount) public payable {
+        require (msg.value >= amount * 2 ether, "Please, pay atleast 2 ether per donut");
+        require (donutBalances [address(this)] >= amount, "sorry, donuts are not enough to to fullfill the purchase request");
+        donutBalances [address(this)] -= amount;
+        donutBalances [msg.sender] += amount;
+    }
+
+}
