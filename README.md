@@ -1,4 +1,4 @@
-# Smart-Contract
+# Smart-Contract on Solidity
 Purchase_Agreement
 # code starts from here
 // SPDX-License-Identifier: MIT
